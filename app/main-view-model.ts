@@ -1,12 +1,21 @@
 import { Observable } from '@nativescript/core'
 
+export async function myhttp(
+  request: RequestInfo
+): Promise<any> {
+  const response = await fetch(request);
+  const body = await response.json();
+  return body;
+}
 export class HelloWorldModel extends Observable {
   private _counter: number
   private _message: string
 
   constructor() {
     super()
-
+    console.log("MyApp - onInit");
+    const body = myhttp("https://jsonplaceholder.typicode.com/todos");
+    body.then(body => console.log("MyApp - response", body));
     // Initialize default values.
     this._counter = 42
     this.updateMessage()
